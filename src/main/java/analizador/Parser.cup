@@ -1,0 +1,91 @@
+package analizador;
+
+import java_cup.runtime.Symbol;
+
+parser code {:
+    public void syntax_error(Symbol s) {
+        // Esto envía el error sintáctico directo a tu tabla HTML
+        String lexema = s.value != null ? s.value.toString() : "Desconocido";
+        modelos.TablaGlobal.errores.add(new modelos.ErrorCompilador("Sintáctico", "No se esperaba el token: " + lexema, s.left));
+    }
+:};
+
+// --- TERMINALES ---
+terminal Liga, Revancha, Copa, Entrenamiento, Pretemporada, Temporada;
+terminal IniciarPartido, InicioPartido, FinPartido, FinJugada, ResultadoFinal;
+terminal Narrar, Ficha, Local, Visitante;
+terminal Dorsal, Decimal, Marcador, Letra, JugadaTexto;
+terminal Gana, Pierde, Empata, NoEmpata, GanaOEmpata, PierdeOEmpata;
+terminal GolSuma, Contraataque;
+terminal IDENTIFICADOR, RELATO, TEXTO_CONTENIDO;
+terminal Integer ENTERO;
+terminal Double DECIMAL_LITERAL;
+
+// --- NO TERMINALES ---
+non terminal programa, lista_instrucciones, instruccion;
+non terminal bloque, condicion, expresion, tipo_dato;
+non terminal lista_revancha, opcion_copa, inicializacion, actualizacion, contenido_relato;
+
+start with programa;
+
+// --- REGLAS PRINCIPALES ---
+
+// Permite tanto "Dorsal principal Local Visitante" como "IniciarPartido"
+programa ::=
+      tipo_dato IDENTIFICADOR Local Visitante bloque
+    | IniciarPartido bloque
+;
+
+lista_instrucciones ::=
+      lista_instrucciones instruccion
+    | /* vacío */
+;
+
+instruccion ::=
+      tipo_dato IDENTIFICADOR Ficha expresion FinJugada
+    | IDENTIFICADOR Ficha expresion FinJugada
+    | Liga Local condicion Visitante bloque lista_revancha opcion_copa
+    | Entrenamiento Local condicion Visitante bloque
+    | Pretemporada bloque Entrenamiento Local condicion Visitante FinJugada
+    | Temporada Local inicializacion FinJugada condicion FinJugada actualizacion Visitante bloque
+    | Narrar Local expresion Visitante FinJugada
+    | ResultadoFinal expresion FinJugada
+;
+
+tipo_dato ::= Dorsal | Decimal | Marcador | Letra | JugadaTexto;
+
+bloque ::= InicioPartido lista_instrucciones FinPartido;
+
+condicion ::=
+      expresion Gana expresion
+    | expresion Pierde expresion
+    | expresion Empata expresion
+;
+
+// Permite múltiples palabras dentro de "Relato ... Relato"
+contenido_relato ::=
+      contenido_relato TEXTO_CONTENIDO
+    | /* vacío */
+;
+
+expresion ::=
+      ENTERO
+    | DECIMAL_LITERAL
+    | IDENTIFICADOR
+    | RELATO contenido_relato RELATO
+    | IDENTIFICADOR GolSuma expresion
+    | IDENTIFICADOR Contraataque expresion
+;
+
+inicializacion ::= tipo_dato IDENTIFICADOR Ficha expresion;
+actualizacion ::= IDENTIFICADOR GolSuma expresion | IDENTIFICADOR Contraataque expresion;
+
+lista_revancha ::=
+      lista_revancha Revancha Local condicion Visitante bloque
+    | /* vacío */
+;
+
+opcion_copa ::=
+      Copa bloque
+    | /* vacío */
+;
