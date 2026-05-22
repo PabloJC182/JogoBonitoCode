@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Intervención del VAR - Errores</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: url('https://images.unsplash.com/photo-1518605368461-1ee125221980?q=80&w=2000&auto=format&fit=crop') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+        .overlay {
+            background: rgba(30, 4, 15, 0.88);
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: -1;
+        }
+        .contenedor {
+            width: 80%; margin: 40px auto;
+        }
+        h1 {
+            text-align: center; font-size: 3em; font-weight: 900;
+            color: #ff4d4d; text-transform: uppercase; letter-spacing: 3px;
+            text-shadow: 0 0 15px rgba(255, 77, 77, 0.8);
+        }
+        table {
+            width: 100%; border-collapse: collapse; margin-top: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px; overflow: hidden;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 77, 77, 0.3);
+        }
+        th {
+            background: linear-gradient(90deg, #660000, #990000);
+            color: white; padding: 20px; font-size: 1.2em;
+            text-transform: uppercase; border-bottom: 3px solid #ff4d4d;
+        }
+        td {
+            padding: 15px; text-align: center; font-size: 1.1em;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        tr:hover { background: rgba(255, 77, 77, 0.15); transition: 0.3s; }
+        .tarjeta-roja { color: #ff4d4d; font-weight: bold; }
+        .desc { text-align: left; }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="contenedor">
+        <h1>📺 Revisión Silenciosa del VAR (Faltas) 📺</h1>
+        <table>
+            <tr><th>#</th><th>Tipo de Falta</th><th>Motivo (Descripción)</th><th>Minuto (Línea)</th></tr>
+        </table>
+    </div>
+</body>
+</html>

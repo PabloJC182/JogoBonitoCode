@@ -1,0 +1,28 @@
+Dorsal principal Local Visitante 
+InicioPartido
+    
+    // Declaramos el marcador
+    Dorsal misGoles Ficha 3 FinJugada
+    Dorsal rivalGoles Ficha 1 FinJugada
+    
+    // Jugada 1: Si ganamos
+    Liga Local misGoles Gana rivalGoles Visitante 
+    InicioPartido
+        Narrar Local Relato ganamos el clasico con un golazo Relato Visitante FinJugada
+    FinPartido
+    
+    // Jugada 2: Si empatamos
+    Revancha Local misGoles Empata rivalGoles Visitante 
+    InicioPartido
+        Narrar Local Relato terminamos en un empate muy cerrado Relato Visitante FinJugada
+    FinPartido
+    
+    // Jugada 3: Si perdemos
+    Copa 
+    InicioPartido
+        Narrar Local Relato caimos derrotados pero seguiremos entrenando Relato Visitante FinJugada
+    FinPartido
+    
+    ResultadoFinal 0 FinJugada
+    
+FinPartido

@@ -1,0 +1,256 @@
+package analizador;
+
+import java_cup.runtime.Symbol;
+import modelos.SimboloSemantico.TipoDato;
+import modelos.ExprResult;
+import modelos.Generador3Dir;
+import modelos.AnalizadorSemantico;
+
+parser code {:
+    public void syntax_error(Symbol s) {
+        String lexema = s.value != null ? s.value.toString() : "Desconocido";
+        modelos.TablaGlobal.errores.add(
+            new modelos.ErrorCompilador("Sintáctico",
+                "No se esperaba el token: " + lexema, s.left));
+    }
+:};
+
+// =======================================================================
+// TERMINALES
+// =======================================================================
+terminal Liga, Revancha, Copa, Entrenamiento, Pretemporada, Temporada;
+terminal IniciarPartido, InicioPartido, FinPartido, FinJugada, ResultadoFinal;
+terminal Narrar, Ficha, Local, Visitante;
+terminal Dorsal, Decimal, Marcador, Letra, JugadaTexto;
+terminal Gana, Pierde, Empata, NoEmpata, GanaOEmpata, PierdeOEmpata;
+terminal GolSuma, Contraataque;
+terminal IDENTIFICADOR, RELATO, TEXTO_CONTENIDO;
+terminal Integer ENTERO;
+terminal Double  DECIMAL_LITERAL;
+
+// =======================================================================
+// NO TERMINALES
+// =======================================================================
+non terminal              programa, lista_instrucciones, instruccion;
+non terminal              bloque, lista_revancha, opcion_copa;
+non terminal              contenido_relato;
+non terminal String       condicion, inicializacion, actualizacion;
+non terminal modelos.ExprResult   expresion;
+non terminal TipoDato     tipo_dato;
+
+start with programa;
+
+// =======================================================================
+// REGLAS
+// =======================================================================
+
+programa ::=
+      tipo_dato:t IDENTIFICADOR:id Local Visitante bloque
+        {:
+            AnalizadorSemantico.declararVariable(t, id.toString(), idleft, true);
+        :}
+    | IniciarPartido bloque
+;
+
+// ── BLOQUE ───────────────────────────────────────────────────────────────
+bloque ::=
+    InicioPartido:ip
+        {: AnalizadorSemantico.abrirScope(); :}
+    lista_instrucciones
+    FinPartido
+        {: AnalizadorSemantico.cerrarScope(); :}
+;
+
+// ── LISTA DE INSTRUCCIONES ────────────────────────────────────────────────
+lista_instrucciones ::=
+      lista_instrucciones instruccion
+    | /* vacío */
+;
+
+// ── INSTRUCCIONES ─────────────────────────────────────────────────────────
+instruccion ::=
+
+    // Declaración + inicialización: Dorsal x Ficha 5 FinJugada
+    tipo_dato:t IDENTIFICADOR:id Ficha expresion:e FinJugada
+        {:
+            String tipoCpp = Generador3Dir.tipoCpp(t);
+            TipoDato tipoVar = AnalizadorSemantico.declararVariable(
+                t, id.toString(), idleft, true);
+            AnalizadorSemantico.verificarCompatibilidad(tipoVar, e.tipo, idleft);
+            Generador3Dir.emitirAsignacion(id.toString(), e.valor, idleft, tipoCpp);
+        :}
+
+    // Asignación: x Ficha expr FinJugada
+    | IDENTIFICADOR:id Ficha expresion:e FinJugada
+        {:
+            TipoDato tipoVar = AnalizadorSemantico.verificarAsignacion(
+                id.toString(), idleft);
+            AnalizadorSemantico.verificarCompatibilidad(tipoVar, e.tipo, idleft);
+            Generador3Dir.emitirAsignacion(id.toString(), e.valor, idleft);
+        :}
+
+    // Liga (if)
+    | Liga Local condicion:cond Visitante
+        {:
+            AnalizadorSemantico.entrarCondicional();
+            Generador3Dir.emitirIfInicio(cond);
+        :}
+      bloque lista_revancha opcion_copa
+        {:
+            AnalizadorSemantico.salirCondicional();
+            Generador3Dir.emitirIfFin();
+        :}
+
+    // Entrenamiento (while)
+    | Entrenamiento Local condicion:cond Visitante
+        {:
+            AnalizadorSemantico.entrarCiclo();
+            Generador3Dir.emitirWhileInicio(cond);
+        :}
+      bloque
+        {:
+            AnalizadorSemantico.salirCiclo();
+            Generador3Dir.emitirWhileFin();
+        :}
+
+    // Pretemporada (do-while)
+    | Pretemporada
+        {:
+            AnalizadorSemantico.entrarCiclo();
+            Generador3Dir.emitirDoWhileInicio();
+        :}
+      bloque Entrenamiento Local condicion:cond Visitante FinJugada
+        {:
+            AnalizadorSemantico.salirCiclo();
+            Generador3Dir.emitirDoWhileFin(cond);
+        :}
+
+    // Temporada (for) — genera for (init; cond; upd)
+    | Temporada Local
+        {:  AnalizadorSemantico.entrarCiclo(); :}
+      inicializacion:ini FinJugada condicion:cond FinJugada actualizacion:upd Visitante
+        {:  Generador3Dir.emitirForInicio(ini, cond, upd); :}
+      bloque
+        {:
+            AnalizadorSemantico.salirCiclo();
+            Generador3Dir.emitirForFin();
+        :}
+
+    // Narrar → cout
+    | Narrar Local expresion:e Visitante FinJugada
+        {:  Generador3Dir.emitirNarrar(e.valor, eleft); :}
+
+    // ResultadoFinal → return
+    | ResultadoFinal expresion:e FinJugada
+        {:
+            AnalizadorSemantico.verificarResultadoFinal(e.tipo, eleft);
+            Generador3Dir.emitirComentario("return " + e.valor);
+        :}
+;
+
+// ── TIPO DE DATO ──────────────────────────────────────────────────────────
+tipo_dato ::=
+      Dorsal:d      {: RESULT = TipoDato.DORSAL;      :}
+    | Decimal:d     {: RESULT = TipoDato.DECIMAL;     :}
+    | JugadaTexto:d {: RESULT = TipoDato.JUGADATEXTO; :}
+    | Marcador:d    {: RESULT = TipoDato.DORSAL;       :}
+    | Letra:d       {: RESULT = TipoDato.JUGADATEXTO; :}
+;
+
+// ── EXPRESIONES ───────────────────────────────────────────────────────────
+expresion ::=
+
+      ENTERO:v
+        {: RESULT = new modelos.ExprResult(TipoDato.DORSAL, v.toString()); :}
+
+    | DECIMAL_LITERAL:v
+        {: RESULT = new modelos.ExprResult(TipoDato.DECIMAL, v.toString()); :}
+
+    | RELATO contenido_relato RELATO
+        {: RESULT = new modelos.ExprResult(TipoDato.JUGADATEXTO, "\"\""); :}
+
+    | IDENTIFICADOR:id
+        {:
+            TipoDato t = AnalizadorSemantico.verificarUso(id.toString(), idleft);
+            RESULT = new modelos.ExprResult(t, id.toString());
+        :}
+
+    | IDENTIFICADOR:id GolSuma expresion:e
+        {:
+            TipoDato tipoId  = AnalizadorSemantico.verificarUso(id.toString(), idleft);
+            TipoDato tipoRes = AnalizadorSemantico.verificarOperacionAritmetica(
+                tipoId, e.tipo, "GolSuma", idleft);
+            String tipoCpp = Generador3Dir.tipoCpp(tipoRes);
+            String temp = Generador3Dir.emitirOperacion(
+                id.toString(), "+", e.valor, idleft, tipoCpp);
+            RESULT = new modelos.ExprResult(tipoRes, temp);
+        :}
+
+    | IDENTIFICADOR:id Contraataque expresion:e
+        {:
+            TipoDato tipoId  = AnalizadorSemantico.verificarUso(id.toString(), idleft);
+            TipoDato tipoRes = AnalizadorSemantico.verificarOperacionAritmetica(
+                tipoId, e.tipo, "Contraataque", idleft);
+            String tipoCpp = Generador3Dir.tipoCpp(tipoRes);
+            String temp = Generador3Dir.emitirOperacion(
+                id.toString(), "-", e.valor, idleft, tipoCpp);
+            RESULT = new modelos.ExprResult(tipoRes, temp);
+        :}
+;
+
+// ── CONTENIDO RELATO ──────────────────────────────────────────────────────
+contenido_relato ::=
+      contenido_relato TEXTO_CONTENIDO
+    | /* vacío */
+;
+
+// ── CONDICIÓN — retorna String C++ ───────────────────────────────────────
+condicion ::=
+      expresion:izq Gana   expresion:der {: RESULT = izq.valor + " > "  + der.valor; :}
+    | expresion:izq Pierde expresion:der {: RESULT = izq.valor + " < "  + der.valor; :}
+    | expresion:izq Empata expresion:der {: RESULT = izq.valor + " == " + der.valor; :}
+;
+
+// ── FOR: inicialización retorna String ────────────────────────────────────
+inicializacion ::=
+    tipo_dato:t IDENTIFICADOR:id Ficha expresion:e
+        {:
+            String tipoCpp = Generador3Dir.tipoCpp(t);
+            TipoDato tipoVar = AnalizadorSemantico.declararVariable(
+                t, id.toString(), idleft, true);
+            AnalizadorSemantico.verificarCompatibilidad(tipoVar, e.tipo, idleft);
+            Generador3Dir.registrarVariable(id.toString(), tipoCpp);
+            RESULT = tipoCpp + " " + id.toString() + " = " + e.valor;
+        :}
+;
+
+// ── FOR: actualización retorna String ─────────────────────────────────────
+actualizacion ::=
+      IDENTIFICADOR:id GolSuma expresion:e
+        {:
+            AnalizadorSemantico.verificarAsignacion(id.toString(), idleft);
+            RESULT = id.toString() + " = " + id.toString() + " + " + e.valor;
+        :}
+    | IDENTIFICADOR:id Contraataque expresion:e
+        {:
+            AnalizadorSemantico.verificarAsignacion(id.toString(), idleft);
+            RESULT = id.toString() + " = " + id.toString() + " - " + e.valor;
+        :}
+;
+
+// ── else if ───────────────────────────────────────────────────────────────
+lista_revancha ::=
+      lista_revancha Revancha Local condicion:cond Visitante
+        {: Generador3Dir.emitirElseIfInicio(cond); :}
+      bloque
+    | /* vacío */
+;
+
+// ── else ──────────────────────────────────────────────────────────────────
+opcion_copa ::=
+      Copa
+        {: Generador3Dir.emitirElseInicio(); :}
+      bloque
+        {: Generador3Dir.emitirElseFin(); :}
+    | /* vacío */
+;
