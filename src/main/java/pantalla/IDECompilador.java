@@ -1,7 +1,10 @@
 package pantalla;
 
+<<<<<<< HEAD
 import modelos.AnalizadorSemantico;
 import modelos.Generador3Dir;
+=======
+>>>>>>> 7811fd0017ca6c222942e7725fc8eb3d63c5a172
 import analizador.Lexer;
 import analizador.Parser;
 import config.ConfigLenguaje;
@@ -35,17 +38,25 @@ import javax.swing.text.Highlighter;
 
 import modelos.TablaGlobal;
 import reportes.ReporteErrores;
+<<<<<<< HEAD
 import reportes.ReporteTablaSimbolos;
 import reportes.ReporteTokens;
 import reportes.ReporteCodigo3D;
+=======
+import reportes.ReporteTokens;
+>>>>>>> 7811fd0017ca6c222942e7725fc8eb3d63c5a172
 
 public class IDECompilador extends JFrame {
 
     private boolean compilado = false;
     private JTextArea txtCodigo;
     private JTextArea txtNumerosLinea;
+<<<<<<< HEAD
     private JButton btnCargar, btnGuardarComo, btnCompilar, btnTokens,
             btnErrores, btnNuevo, btnCodigo3D, btnSimbolos;
+=======
+    private JButton btnCargar, btnGuardarComo, btnCompilar, btnTokens, btnErrores, btnNuevo;
+>>>>>>> 7811fd0017ca6c222942e7725fc8eb3d63c5a172
     private JLabel lblStatus;
     private Pattern p;
 
@@ -60,8 +71,14 @@ public class IDECompilador extends JFrame {
     private void initComponents() {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Estadio JogoBonito - IDE Compilador");
+<<<<<<< HEAD
         setPreferredSize(new Dimension(1150, 700));
         getContentPane().setLayout(new BorderLayout(10, 10));
+=======
+        setPreferredSize(new Dimension(1050, 700));
+        getContentPane().setLayout(new BorderLayout(10, 10));
+
+>>>>>>> 7811fd0017ca6c222942e7725fc8eb3d63c5a172
         getContentPane().setBackground(new Color(4, 16, 58));
 
         txtCodigo = new JTextArea();
@@ -89,9 +106,18 @@ public class IDECompilador extends JFrame {
                 }
                 txtNumerosLinea.setText(textoNumeros.toString());
             }
+<<<<<<< HEAD
             @Override public void insertUpdate(javax.swing.event.DocumentEvent e) { actualizarLineas(); }
             @Override public void removeUpdate(javax.swing.event.DocumentEvent e) { actualizarLineas(); }
             @Override public void changedUpdate(javax.swing.event.DocumentEvent e) { actualizarLineas(); }
+=======
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) { actualizarLineas(); }
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) { actualizarLineas(); }
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) { actualizarLineas(); }
+>>>>>>> 7811fd0017ca6c222942e7725fc8eb3d63c5a172
         });
 
         JScrollPane scrollCodigo = new JScrollPane(txtCodigo);
@@ -99,6 +125,7 @@ public class IDECompilador extends JFrame {
                 BorderFactory.createEmptyBorder(10, 15, 5, 15),
                 BorderFactory.createLineBorder(new Color(0, 240, 255), 2)
         ));
+<<<<<<< HEAD
         txtCodigo.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
         scrollCodigo.setRowHeaderView(txtNumerosLinea);
         scrollCodigo.setBackground(new Color(4, 16, 58));
@@ -116,12 +143,32 @@ public class IDECompilador extends JFrame {
         btnCodigo3D    = crearBotonEstilizado(" Código 3 Direcciones",  new Color(0, 150, 136));
         btnSimbolos    = crearBotonEstilizado(" Tabla de Simbolos",     new Color(255, 193, 7));
         btnNuevo       = crearBotonEstilizado(" Limpiar",               new Color(255, 160, 0));
+=======
+
+        txtCodigo.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10)); // Margen interior del código
+        scrollCodigo.setRowHeaderView(txtNumerosLinea);
+
+        scrollCodigo.setBackground(new Color(4, 16, 58));
+        scrollCodigo.getViewport().setBackground(new Color(10, 20, 40));
+
+        // --- VESTUARIOS (Panel de Botones) ---
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 15));
+        panelBotones.setBackground(new Color(4, 16, 58));
+
+        btnCargar = crearBotonEstilizado(" Abrir", new Color(41, 182, 246));
+        btnGuardarComo = crearBotonEstilizado(" Guardar Como", new Color(126, 87, 194));
+        btnCompilar = crearBotonEstilizado(" Pitar Inicio", new Color(46, 125, 50));
+        btnTokens = crearBotonEstilizado(" Tokens", new Color(25, 118, 210));
+        btnErrores = crearBotonEstilizado(" Faltas", new Color(211, 47, 47));
+        btnNuevo = crearBotonEstilizado(" Limpiar", new Color(255, 160, 0));
+>>>>>>> 7811fd0017ca6c222942e7725fc8eb3d63c5a172
 
         panelBotones.add(btnCargar);
         panelBotones.add(btnGuardarComo);
         panelBotones.add(btnCompilar);
         panelBotones.add(btnTokens);
         panelBotones.add(btnErrores);
+<<<<<<< HEAD
         panelBotones.add(btnCodigo3D);
         panelBotones.add(btnSimbolos);
         panelBotones.add(btnNuevo);
@@ -130,10 +177,20 @@ public class IDECompilador extends JFrame {
         JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 5));
         panelInferior.setBackground(new Color(4, 16, 58));
         lblStatus = new JLabel("Línea: 1 | Columna: 1 | Táctica: Sin guardar");
+=======
+        panelBotones.add(btnNuevo);
+
+        // --- MARCADOR (Barra de estado inferior) ---
+        JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 5));
+        panelInferior.setBackground(new Color(4, 16, 58));
+
+        lblStatus = new JLabel("Minuto 1 | Posición 1 | Táctica: Sin guardar");
+>>>>>>> 7811fd0017ca6c222942e7725fc8eb3d63c5a172
         lblStatus.setFont(new Font("Arial", Font.BOLD, 12));
         lblStatus.setForeground(new Color(212, 175, 55));
         panelInferior.add(lblStatus);
 
+<<<<<<< HEAD
         getContentPane().add(panelBotones,  BorderLayout.NORTH);
         getContentPane().add(scrollCodigo,  BorderLayout.CENTER);
         getContentPane().add(panelInferior, BorderLayout.SOUTH);
@@ -147,26 +204,66 @@ public class IDECompilador extends JFrame {
         btnCodigo3D.addActionListener(evt    -> abrirReporte("codigo3d.html"));
         btnSimbolos.addActionListener(evt    -> abrirReporte("tabla_simbolos.html"));
         btnNuevo.addActionListener(evt       -> btnNuevoActionPerformed(evt));
+=======
+        // Ensamblar todo
+        getContentPane().add(panelBotones, BorderLayout.NORTH);
+        getContentPane().add(scrollCodigo, BorderLayout.CENTER);
+        getContentPane().add(panelInferior, BorderLayout.SOUTH);
+
+        // Asignar Eventos a los botones
+        btnCargar.addActionListener(evt -> cargarArchivo());
+        btnGuardarComo.addActionListener(evt -> ejecutarGuardadoComo());
+        btnCompilar.addActionListener(evt -> btnCompilarActionPerformed(evt));
+        btnTokens.addActionListener(evt -> abrirReporte("tokens.html"));
+        btnErrores.addActionListener(evt -> abrirReporte("errores.html"));
+        btnNuevo.addActionListener(evt -> btnNuevoActionPerformed(evt));
+>>>>>>> 7811fd0017ca6c222942e7725fc8eb3d63c5a172
 
         pack();
     }
 
     private JButton crearBotonEstilizado(String texto, Color colorFondo) {
         JButton boton = new JButton(texto);
+<<<<<<< HEAD
         boton.setFont(new Font("Arial", Font.BOLD, 15));
         boton.setForeground(Color.WHITE);
         boton.setBackground(colorFondo);
         boton.setFocusPainted(false);
         boton.setOpaque(true);
+=======
+
+        boton.setFont(new Font("Arial", Font.BOLD, 15));
+        boton.setForeground(Color.WHITE); // Texto blanco brillante
+        boton.setBackground(colorFondo); // Color sólido
+        boton.setFocusPainted(false); // Sin cuadros feos al hacer clic
+        boton.setOpaque(true); // Obliga a pintar el fondo sólido
+
+>>>>>>> 7811fd0017ca6c222942e7725fc8eb3d63c5a172
         boton.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(colorFondo.darker(), 2),
                 BorderFactory.createEmptyBorder(10, 18, 10, 18)
         ));
         boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+<<<<<<< HEAD
         boton.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override public void mouseEntered(java.awt.event.MouseEvent e) { boton.setBackground(colorFondo.brighter()); }
             @Override public void mouseExited(java.awt.event.MouseEvent e)  { boton.setBackground(colorFondo); }
         });
+=======
+
+        boton.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent e) {
+                boton.setBackground(colorFondo.brighter());
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent e) {
+                boton.setBackground(colorFondo);
+            }
+        });
+
+>>>>>>> 7811fd0017ca6c222942e7725fc8eb3d63c5a172
         return boton;
     }
 
@@ -174,6 +271,7 @@ public class IDECompilador extends JFrame {
         txtCodigo.addCaretListener(evt -> {
             try {
                 int caretPos = txtCodigo.getCaretPosition();
+<<<<<<< HEAD
                 int linea    = txtCodigo.getLineOfOffset(caretPos);
                 int columna  = caretPos - txtCodigo.getLineStartOffset(linea);
                 String nombreArchivo = (archivoActual != null) ? archivoActual.getName() : "Sin guardar";
@@ -181,6 +279,18 @@ public class IDECompilador extends JFrame {
                 limpiarResaltado();
                 iluminarSintaxis();
             } catch (Exception ex) {}
+=======
+                int linea = txtCodigo.getLineOfOffset(caretPos);
+                int columna = caretPos - txtCodigo.getLineStartOffset(linea);
+
+                String nombreArchivo = (archivoActual != null) ? archivoActual.getName() : "Sin guardar";
+                lblStatus.setText("Línea: " + (linea + 1) + " | Columna: " + (columna + 1) + " | Táctica: " + nombreArchivo);
+
+                limpiarResaltado();
+                iluminarSintaxis();
+            } catch (Exception ex) {
+            }
+>>>>>>> 7811fd0017ca6c222942e7725fc8eb3d63c5a172
         });
     }
 
@@ -188,13 +298,25 @@ public class IDECompilador extends JFrame {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Selecciona la táctica (.txt)");
         fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos de Texto (*.txt)", "txt"));
+<<<<<<< HEAD
         int seleccion = fileChooser.showOpenDialog(this);
+=======
+
+        int seleccion = fileChooser.showOpenDialog(this);
+
+>>>>>>> 7811fd0017ca6c222942e7725fc8eb3d63c5a172
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             archivoActual = fileChooser.getSelectedFile();
             try (BufferedReader lector = new BufferedReader(new FileReader(archivoActual))) {
                 txtCodigo.setText("");
                 String linea;
+<<<<<<< HEAD
                 while ((linea = lector.readLine()) != null) txtCodigo.append(linea + "\n");
+=======
+                while ((linea = lector.readLine()) != null) {
+                    txtCodigo.append(linea + "\n");
+                }
+>>>>>>> 7811fd0017ca6c222942e7725fc8eb3d63c5a172
                 txtCodigo.setCaretPosition(0);
                 lblStatus.setText("Línea: 1 | Columna: 1 | Táctica cargada: " + archivoActual.getName());
             } catch (IOException e) {
@@ -207,25 +329,53 @@ public class IDECompilador extends JFrame {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Guardar Táctica Como...");
         fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos de Texto (*.txt)", "txt"));
+<<<<<<< HEAD
         if (archivoActual != null) fileChooser.setSelectedFile(archivoActual);
         else fileChooser.setSelectedFile(new File("mi_tactica.txt"));
+=======
+
+        if (archivoActual != null) {
+            fileChooser.setSelectedFile(archivoActual);
+        } else {
+            fileChooser.setSelectedFile(new File("mi_tactica.txt"));
+        }
+>>>>>>> 7811fd0017ca6c222942e7725fc8eb3d63c5a172
 
         int seleccion = fileChooser.showSaveDialog(this);
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             File archivoSeleccionado = fileChooser.getSelectedFile();
+<<<<<<< HEAD
             if (!archivoSeleccionado.getName().toLowerCase().endsWith(".txt"))
                 archivoActual = new File(archivoSeleccionado.getParentFile(), archivoSeleccionado.getName() + ".txt");
             else
                 archivoActual = archivoSeleccionado;
+=======
+
+            if (!archivoSeleccionado.getName().toLowerCase().endsWith(".txt")) {
+                archivoActual = new File(archivoSeleccionado.getParentFile(), archivoSeleccionado.getName() + ".txt");
+            } else {
+                archivoActual = archivoSeleccionado;
+            }
+>>>>>>> 7811fd0017ca6c222942e7725fc8eb3d63c5a172
 
             try (BufferedWriter escritor = new BufferedWriter(new FileWriter(archivoActual))) {
                 escritor.write(txtCodigo.getText());
                 lblStatus.setText("Línea: 1 | Columna: 1 | Táctica: " + archivoActual.getName());
+<<<<<<< HEAD
                 JOptionPane.showMessageDialog(this,
                         "¡Táctica guardada con éxito!\n\nRuta: " + archivoActual.getAbsolutePath(),
                         "Guardado Exitoso", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Error al guardar: " + e.getMessage(), "VAR - Error", JOptionPane.ERROR_MESSAGE);
+=======
+
+                JOptionPane.showMessageDialog(this,
+                        "¡Táctica guardada con éxito! \n\nRuta: " + archivoActual.getAbsolutePath(),
+                        "Guardado Exitoso",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error al guardar la táctica: " + e.getMessage(), "VAR - Error", JOptionPane.ERROR_MESSAGE);
+>>>>>>> 7811fd0017ca6c222942e7725fc8eb3d63c5a172
             }
         }
     }
@@ -241,6 +391,7 @@ public class IDECompilador extends JFrame {
 
         try {
             ConfigLenguaje.cargarConfiguracion();
+<<<<<<< HEAD
 
             // ── Limpieza total antes de cada compilación ──────────
             TablaGlobal.limpiar();           // tokens + errores
@@ -248,11 +399,18 @@ public class IDECompilador extends JFrame {
             Generador3Dir.limpiar();         // instrucciones + variables + temporales
 
             Lexer  lexer  = new Lexer(new StringReader(codigo));
+=======
+            TablaGlobal.tokens.clear();
+            TablaGlobal.errores.clear();
+
+            Lexer lexer = new Lexer(new StringReader(codigo));
+>>>>>>> 7811fd0017ca6c222942e7725fc8eb3d63c5a172
             Parser parser = new Parser(lexer);
 
             try {
                 parser.parse();
             } catch (Exception e) {
+<<<<<<< HEAD
                 // Error crítico suprimido — los errores sintácticos
                 // ya fueron capturados por syntax_error() del parser
             }
@@ -277,6 +435,25 @@ public class IDECompilador extends JFrame {
                 JOptionPane.showMessageDialog(this,
                         "¡Falta! Se detectaron " + TablaGlobal.errores.size() + " errores.\nRevisa el reporte de errores para más info.",
                         "Resultado del VAR", JOptionPane.ERROR_MESSAGE);
+=======
+                TablaGlobal.errores.add(new modelos.ErrorCompilador("Sintáctico Crítico", "Error fatal en la estructura: " + e.getMessage(), 0));
+            }
+
+            compilado = true;
+            ReporteTokens.generar();
+            ReporteErrores.generar();
+
+            if (TablaGlobal.errores.isEmpty()) {
+                iluminarSintaxis();
+                JOptionPane.showMessageDialog(this, " ¡Juego Limpio! Compilación exitosa.\nTokens generados: " + TablaGlobal.tokens.size(), "Resultado del VAR", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                for (modelos.ErrorCompilador err : TablaGlobal.errores) {
+                    if (err.linea > 0) {
+                        resaltarError(err.linea);
+                    }
+                }
+                JOptionPane.showMessageDialog(this, " ¡Falta! Se detectaron " + TablaGlobal.errores.size() + " errores.\nRevisa el reporte de errores para más info.", "Resultado del VAR", JOptionPane.ERROR_MESSAGE);
+>>>>>>> 7811fd0017ca6c222942e7725fc8eb3d63c5a172
             }
 
         } catch (Throwable t) {
@@ -310,6 +487,7 @@ public class IDECompilador extends JFrame {
 
             p = Pattern.compile("Relato[\\s\\S]*?Relato");
             java.util.regex.Matcher mRelato = p.matcher(texto);
+<<<<<<< HEAD
             Pattern pCiclos = Pattern.compile("Mientras|Entrenamiento|Temporada|Pretemporada");
             java.util.regex.Matcher mCiclos = pCiclos.matcher(texto);
 
@@ -323,6 +501,24 @@ public class IDECompilador extends JFrame {
             while (mPase.find())
                 highlighter.addHighlight(mPase.start(), mPase.end(),
                         new DefaultHighlighter.DefaultHighlightPainter(new Color(255, 200, 0, 100)));
+=======
+
+            Pattern pCiclos = Pattern.compile("Mientras|Entrenamiento|Temporada|Pretemporada");
+            java.util.regex.Matcher mCiclos = pCiclos.matcher(texto);
+
+            while (mCiclos.find()) {
+                highlighter.addHighlight(mCiclos.start(), mCiclos.end(), new DefaultHighlighter.DefaultHighlightPainter(new Color(173, 216, 230, 100)));
+            }
+
+            while (mRelato.find()) {
+                highlighter.addHighlight(mRelato.start(), mRelato.end(), pintorRelato);
+            }
+
+            java.util.regex.Matcher mPase = Pattern.compile("'[^']'").matcher(texto);
+            while (mPase.find()) {
+                highlighter.addHighlight(mPase.start(), mPase.end(), new DefaultHighlighter.DefaultHighlightPainter(new Color(255, 200, 0, 100)));
+            }
+>>>>>>> 7811fd0017ca6c222942e7725fc8eb3d63c5a172
         } catch (Exception e) {}
     }
 
@@ -336,7 +532,11 @@ public class IDECompilador extends JFrame {
             Highlighter highlighter = txtCodigo.getHighlighter();
             Highlighter.HighlightPainter painter = new DefaultHighlighter.DefaultHighlightPainter(new Color(255, 51, 51, 150));
             int inicio = txtCodigo.getLineStartOffset(linea - 1);
+<<<<<<< HEAD
             int fin    = txtCodigo.getLineEndOffset(linea - 1);
+=======
+            int fin = txtCodigo.getLineEndOffset(linea - 1);
+>>>>>>> 7811fd0017ca6c222942e7725fc8eb3d63c5a172
             highlighter.addHighlight(inicio, fin, painter);
         } catch (Exception e) {
             System.err.println("No se pudo resaltar: " + e.getMessage());
@@ -344,6 +544,7 @@ public class IDECompilador extends JFrame {
     }
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {
+<<<<<<< HEAD
         int opcion = JOptionPane.showConfirmDialog(this,
                 "¿Seguro que quieres limpiar la cancha? Si no guardaste, perderás los cambios.",
                 "Nuevo Archivo", JOptionPane.YES_NO_OPTION);
@@ -351,6 +552,12 @@ public class IDECompilador extends JFrame {
             txtCodigo.setText("");
             archivoActual = null;
             compilado     = false;
+=======
+        int opcion = JOptionPane.showConfirmDialog(this, "¿Seguro que quieres limpiar la cancha? Si no guardaste, perderás los cambios.", "Nuevo Archivo", JOptionPane.YES_NO_OPTION);
+        if (opcion == JOptionPane.YES_OPTION) {
+            txtCodigo.setText("");
+            archivoActual = null;
+>>>>>>> 7811fd0017ca6c222942e7725fc8eb3d63c5a172
             lblStatus.setText("Línea: 1 | Columna: 1 | Táctica: Sin guardar");
             txtCodigo.requestFocus();
         }
@@ -359,7 +566,13 @@ public class IDECompilador extends JFrame {
     public static void main(String args[]) {
         try {
             javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getCrossPlatformLookAndFeelClassName());
+<<<<<<< HEAD
         } catch (Exception ex) { ex.printStackTrace(); }
+=======
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+>>>>>>> 7811fd0017ca6c222942e7725fc8eb3d63c5a172
         java.awt.EventQueue.invokeLater(() -> new IDECompilador().setVisible(true));
     }
 }
