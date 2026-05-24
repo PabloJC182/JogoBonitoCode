@@ -16,9 +16,7 @@
             background: rgba(4, 16, 58, 0.6);
             position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: -1;
         }
-        .contenedor {
-            width: 80%; margin: 40px auto;
-        }
+        .contenedor { width: 90%; margin: 40px auto; }
         h1 {
             text-align: center; font-size: 3em; font-weight: 900;
             color: #D4AF37; text-transform: uppercase; letter-spacing: 3px;
@@ -34,16 +32,24 @@
         }
         th {
             background: linear-gradient(90deg, #0e194f, #1a2a6c);
-            color: white; padding: 20px; font-size: 1.2em;
+            color: white; padding: 16px; font-size: 1em;
             text-transform: uppercase; border-bottom: 3px solid #D4AF37;
         }
         td {
-            padding: 15px; text-align: center; font-size: 1.1em;
+            padding: 13px 15px; text-align: center; font-size: 1em;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         tr:hover { background: rgba(255, 255, 255, 0.15); transition: 0.3s; }
-        .highlight { color: #00f0ff; font-weight: bold; }
-        .silver { color: #c0c0c0; }
+        .lexema    { color: #00f0ff; font-weight: bold; }
+        .token     { color: #c0c0c0; }
+        .equiv     { color: #FFD700; font-weight: bold; }
+        .badge {
+            display: inline-block; padding: 3px 10px;
+            border-radius: 12px; font-size: 0.85em; font-weight: 700;
+            background: rgba(255,215,0,0.15);
+            border: 1px solid rgba(255,215,0,0.5);
+            color: #FFD700;
+        }
     </style>
 </head>
 <body>
@@ -51,55 +57,1307 @@
     <div class="contenedor">
         <h1>🏆 Análisis de Pases (Tokens) 🏆</h1>
         <table>
-            <tr><th>#</th><th>Jugada (Lexema)</th><th>Tipo de Pase (Token)</th><th>Minuto (Línea)</th><th>Posición (Col)</th></tr>
+            <tr>
+                <th>#</th>
+                <th>Jugada (Lexema)</th>
+                <th>Equivalente Real</th>
+                <th>Minuto (Línea)</th>
+                <th>Posición (Col)</th>
+            </tr>
             <tr>
                 <td>1</td>
-                <td class="highlight">IniciarPartido</td>
-                <td class="silver">IniciarPartido</td>
+                <td class="lexema">IniciarPartido</td>
+                <td><span class="badge">main()</span></td>
                 <td>1</td>
                 <td>1</td>
             </tr>
             <tr>
                 <td>2</td>
-                <td class="highlight">InicioPartido</td>
-                <td class="silver">InicioPartido</td>
+                <td class="lexema">InicioPartido</td>
+                <td><span class="badge">{ (inicio bloque)</span></td>
                 <td>2</td>
                 <td>1</td>
             </tr>
             <tr>
                 <td>3</td>
-                <td class="highlight">Dorsal</td>
-                <td class="silver">Dorsal</td>
+                <td class="lexema">Dorsal</td>
+                <td><span class="badge">int</span></td>
                 <td>5</td>
                 <td>5</td>
             </tr>
             <tr>
                 <td>4</td>
-                <td class="highlight">suma</td>
-                <td class="silver">IDENTIFICADOR</td>
+                <td class="lexema">suma</td>
+                <td><span class="badge">Identificador</span></td>
                 <td>5</td>
                 <td>12</td>
             </tr>
             <tr>
                 <td>5</td>
-                <td class="highlight">Ficha</td>
-                <td class="silver">Ficha</td>
+                <td class="lexema">Ficha</td>
+                <td><span class="badge">= (asignación)</span></td>
                 <td>5</td>
                 <td>17</td>
             </tr>
             <tr>
                 <td>6</td>
-                <td class="highlight">0</td>
-                <td class="silver">ENTERO</td>
+                <td class="lexema">0</td>
+                <td><span class="badge">Literal entero</span></td>
                 <td>5</td>
                 <td>23</td>
             </tr>
             <tr>
                 <td>7</td>
-                <td class="highlight">FinJugada</td>
-                <td class="silver">FinJugada</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
                 <td>5</td>
                 <td>25</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td class="lexema">Dorsal</td>
+                <td><span class="badge">int</span></td>
+                <td>6</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td class="lexema">contador</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>6</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td class="lexema">Ficha</td>
+                <td><span class="badge">= (asignación)</span></td>
+                <td>6</td>
+                <td>21</td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td class="lexema">0</td>
+                <td><span class="badge">Literal entero</span></td>
+                <td>6</td>
+                <td>27</td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>6</td>
+                <td>29</td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td class="lexema">Dorsal</td>
+                <td><span class="badge">int</span></td>
+                <td>7</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td class="lexema">numero</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>7</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td class="lexema">Ficha</td>
+                <td><span class="badge">= (asignación)</span></td>
+                <td>7</td>
+                <td>19</td>
+            </tr>
+            <tr>
+                <td>16</td>
+                <td class="lexema">10</td>
+                <td><span class="badge">Literal entero</span></td>
+                <td>7</td>
+                <td>25</td>
+            </tr>
+            <tr>
+                <td>17</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>7</td>
+                <td>28</td>
+            </tr>
+            <tr>
+                <td>18</td>
+                <td class="lexema">Dorsal</td>
+                <td><span class="badge">int</span></td>
+                <td>8</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>19</td>
+                <td class="lexema">resultado</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>8</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <td>20</td>
+                <td class="lexema">Ficha</td>
+                <td><span class="badge">= (asignación)</span></td>
+                <td>8</td>
+                <td>22</td>
+            </tr>
+            <tr>
+                <td>21</td>
+                <td class="lexema">0</td>
+                <td><span class="badge">Literal entero</span></td>
+                <td>8</td>
+                <td>28</td>
+            </tr>
+            <tr>
+                <td>22</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>8</td>
+                <td>30</td>
+            </tr>
+            <tr>
+                <td>23</td>
+                <td class="lexema">Dorsal</td>
+                <td><span class="badge">int</span></td>
+                <td>9</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>24</td>
+                <td class="lexema">maximo</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>9</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <td>25</td>
+                <td class="lexema">Ficha</td>
+                <td><span class="badge">= (asignación)</span></td>
+                <td>9</td>
+                <td>19</td>
+            </tr>
+            <tr>
+                <td>26</td>
+                <td class="lexema">100</td>
+                <td><span class="badge">Literal entero</span></td>
+                <td>9</td>
+                <td>25</td>
+            </tr>
+            <tr>
+                <td>27</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>9</td>
+                <td>29</td>
+            </tr>
+            <tr>
+                <td>28</td>
+                <td class="lexema">Dorsal</td>
+                <td><span class="badge">int</span></td>
+                <td>10</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>29</td>
+                <td class="lexema">acumulado</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>10</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <td>30</td>
+                <td class="lexema">Ficha</td>
+                <td><span class="badge">= (asignación)</span></td>
+                <td>10</td>
+                <td>22</td>
+            </tr>
+            <tr>
+                <td>31</td>
+                <td class="lexema">1</td>
+                <td><span class="badge">Literal entero</span></td>
+                <td>10</td>
+                <td>28</td>
+            </tr>
+            <tr>
+                <td>32</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>10</td>
+                <td>30</td>
+            </tr>
+            <tr>
+                <td>33</td>
+                <td class="lexema">Dorsal</td>
+                <td><span class="badge">int</span></td>
+                <td>13</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>34</td>
+                <td class="lexema">doble</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>13</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <td>35</td>
+                <td class="lexema">Ficha</td>
+                <td><span class="badge">= (asignación)</span></td>
+                <td>13</td>
+                <td>18</td>
+            </tr>
+            <tr>
+                <td>36</td>
+                <td class="lexema">numero</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>13</td>
+                <td>24</td>
+            </tr>
+            <tr>
+                <td>37</td>
+                <td class="lexema">GolSuma</td>
+                <td><span class="badge">+ (suma)</span></td>
+                <td>13</td>
+                <td>31</td>
+            </tr>
+            <tr>
+                <td>38</td>
+                <td class="lexema">numero</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>13</td>
+                <td>39</td>
+            </tr>
+            <tr>
+                <td>39</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>13</td>
+                <td>46</td>
+            </tr>
+            <tr>
+                <td>40</td>
+                <td class="lexema">Dorsal</td>
+                <td><span class="badge">int</span></td>
+                <td>14</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>41</td>
+                <td class="lexema">diferencia</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>14</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <td>42</td>
+                <td class="lexema">Ficha</td>
+                <td><span class="badge">= (asignación)</span></td>
+                <td>14</td>
+                <td>23</td>
+            </tr>
+            <tr>
+                <td>43</td>
+                <td class="lexema">maximo</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>14</td>
+                <td>29</td>
+            </tr>
+            <tr>
+                <td>44</td>
+                <td class="lexema">Contraataque</td>
+                <td><span class="badge">- (resta)</span></td>
+                <td>14</td>
+                <td>36</td>
+            </tr>
+            <tr>
+                <td>45</td>
+                <td class="lexema">numero</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>14</td>
+                <td>49</td>
+            </tr>
+            <tr>
+                <td>46</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>14</td>
+                <td>56</td>
+            </tr>
+            <tr>
+                <td>47</td>
+                <td class="lexema">Dorsal</td>
+                <td><span class="badge">int</span></td>
+                <td>15</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>48</td>
+                <td class="lexema">temp1</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>15</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <td>49</td>
+                <td class="lexema">Ficha</td>
+                <td><span class="badge">= (asignación)</span></td>
+                <td>15</td>
+                <td>18</td>
+            </tr>
+            <tr>
+                <td>50</td>
+                <td class="lexema">doble</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>15</td>
+                <td>24</td>
+            </tr>
+            <tr>
+                <td>51</td>
+                <td class="lexema">GolSuma</td>
+                <td><span class="badge">+ (suma)</span></td>
+                <td>15</td>
+                <td>30</td>
+            </tr>
+            <tr>
+                <td>52</td>
+                <td class="lexema">diferencia</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>15</td>
+                <td>38</td>
+            </tr>
+            <tr>
+                <td>53</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>15</td>
+                <td>49</td>
+            </tr>
+            <tr>
+                <td>54</td>
+                <td class="lexema">Narrar</td>
+                <td><span class="badge">cout</span></td>
+                <td>16</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>55</td>
+                <td class="lexema">Local</td>
+                <td><span class="badge">( (apertura paréntesis)</span></td>
+                <td>16</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <td>56</td>
+                <td class="lexema">temp1</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>16</td>
+                <td>18</td>
+            </tr>
+            <tr>
+                <td>57</td>
+                <td class="lexema">Visitante</td>
+                <td><span class="badge">) (cierre paréntesis)</span></td>
+                <td>16</td>
+                <td>24</td>
+            </tr>
+            <tr>
+                <td>58</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>16</td>
+                <td>34</td>
+            </tr>
+            <tr>
+                <td>59</td>
+                <td class="lexema">Narrar</td>
+                <td><span class="badge">cout</span></td>
+                <td>19</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>60</td>
+                <td class="lexema">Local</td>
+                <td><span class="badge">( (apertura paréntesis)</span></td>
+                <td>19</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <td>61</td>
+                <td class="lexema">suma</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>19</td>
+                <td>18</td>
+            </tr>
+            <tr>
+                <td>62</td>
+                <td class="lexema">Visitante</td>
+                <td><span class="badge">) (cierre paréntesis)</span></td>
+                <td>19</td>
+                <td>23</td>
+            </tr>
+            <tr>
+                <td>63</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>19</td>
+                <td>33</td>
+            </tr>
+            <tr>
+                <td>64</td>
+                <td class="lexema">Narrar</td>
+                <td><span class="badge">cout</span></td>
+                <td>20</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>65</td>
+                <td class="lexema">Local</td>
+                <td><span class="badge">( (apertura paréntesis)</span></td>
+                <td>20</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <td>66</td>
+                <td class="lexema">numero</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>20</td>
+                <td>18</td>
+            </tr>
+            <tr>
+                <td>67</td>
+                <td class="lexema">Visitante</td>
+                <td><span class="badge">) (cierre paréntesis)</span></td>
+                <td>20</td>
+                <td>25</td>
+            </tr>
+            <tr>
+                <td>68</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>20</td>
+                <td>35</td>
+            </tr>
+            <tr>
+                <td>69</td>
+                <td class="lexema">Narrar</td>
+                <td><span class="badge">cout</span></td>
+                <td>21</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>70</td>
+                <td class="lexema">Local</td>
+                <td><span class="badge">( (apertura paréntesis)</span></td>
+                <td>21</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <td>71</td>
+                <td class="lexema">maximo</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>21</td>
+                <td>18</td>
+            </tr>
+            <tr>
+                <td>72</td>
+                <td class="lexema">Visitante</td>
+                <td><span class="badge">) (cierre paréntesis)</span></td>
+                <td>21</td>
+                <td>25</td>
+            </tr>
+            <tr>
+                <td>73</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>21</td>
+                <td>35</td>
+            </tr>
+            <tr>
+                <td>74</td>
+                <td class="lexema">Entrenamiento</td>
+                <td><span class="badge">while</span></td>
+                <td>24</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>75</td>
+                <td class="lexema">Local</td>
+                <td><span class="badge">( (apertura paréntesis)</span></td>
+                <td>24</td>
+                <td>19</td>
+            </tr>
+            <tr>
+                <td>76</td>
+                <td class="lexema">contador</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>24</td>
+                <td>25</td>
+            </tr>
+            <tr>
+                <td>77</td>
+                <td class="lexema">Pierde</td>
+                <td><span class="badge">< (menor que)</span></td>
+                <td>24</td>
+                <td>34</td>
+            </tr>
+            <tr>
+                <td>78</td>
+                <td class="lexema">numero</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>24</td>
+                <td>41</td>
+            </tr>
+            <tr>
+                <td>79</td>
+                <td class="lexema">Visitante</td>
+                <td><span class="badge">) (cierre paréntesis)</span></td>
+                <td>24</td>
+                <td>48</td>
+            </tr>
+            <tr>
+                <td>80</td>
+                <td class="lexema">InicioPartido</td>
+                <td><span class="badge">{ (inicio bloque)</span></td>
+                <td>25</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>81</td>
+                <td class="lexema">suma</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>26</td>
+                <td>9</td>
+            </tr>
+            <tr>
+                <td>82</td>
+                <td class="lexema">Ficha</td>
+                <td><span class="badge">= (asignación)</span></td>
+                <td>26</td>
+                <td>14</td>
+            </tr>
+            <tr>
+                <td>83</td>
+                <td class="lexema">suma</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>26</td>
+                <td>20</td>
+            </tr>
+            <tr>
+                <td>84</td>
+                <td class="lexema">GolSuma</td>
+                <td><span class="badge">+ (suma)</span></td>
+                <td>26</td>
+                <td>25</td>
+            </tr>
+            <tr>
+                <td>85</td>
+                <td class="lexema">contador</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>26</td>
+                <td>33</td>
+            </tr>
+            <tr>
+                <td>86</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>26</td>
+                <td>42</td>
+            </tr>
+            <tr>
+                <td>87</td>
+                <td class="lexema">contador</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>27</td>
+                <td>9</td>
+            </tr>
+            <tr>
+                <td>88</td>
+                <td class="lexema">Ficha</td>
+                <td><span class="badge">= (asignación)</span></td>
+                <td>27</td>
+                <td>18</td>
+            </tr>
+            <tr>
+                <td>89</td>
+                <td class="lexema">contador</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>27</td>
+                <td>24</td>
+            </tr>
+            <tr>
+                <td>90</td>
+                <td class="lexema">GolSuma</td>
+                <td><span class="badge">+ (suma)</span></td>
+                <td>27</td>
+                <td>33</td>
+            </tr>
+            <tr>
+                <td>91</td>
+                <td class="lexema">1</td>
+                <td><span class="badge">Literal entero</span></td>
+                <td>27</td>
+                <td>41</td>
+            </tr>
+            <tr>
+                <td>92</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>27</td>
+                <td>43</td>
+            </tr>
+            <tr>
+                <td>93</td>
+                <td class="lexema">Narrar</td>
+                <td><span class="badge">cout</span></td>
+                <td>28</td>
+                <td>9</td>
+            </tr>
+            <tr>
+                <td>94</td>
+                <td class="lexema">Local</td>
+                <td><span class="badge">( (apertura paréntesis)</span></td>
+                <td>28</td>
+                <td>16</td>
+            </tr>
+            <tr>
+                <td>95</td>
+                <td class="lexema">suma</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>28</td>
+                <td>22</td>
+            </tr>
+            <tr>
+                <td>96</td>
+                <td class="lexema">Visitante</td>
+                <td><span class="badge">) (cierre paréntesis)</span></td>
+                <td>28</td>
+                <td>27</td>
+            </tr>
+            <tr>
+                <td>97</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>28</td>
+                <td>37</td>
+            </tr>
+            <tr>
+                <td>98</td>
+                <td class="lexema">FinPartido</td>
+                <td><span class="badge">} (fin bloque)</span></td>
+                <td>29</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>99</td>
+                <td class="lexema">Pretemporada</td>
+                <td><span class="badge">do-while</span></td>
+                <td>32</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>100</td>
+                <td class="lexema">InicioPartido</td>
+                <td><span class="badge">{ (inicio bloque)</span></td>
+                <td>33</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>101</td>
+                <td class="lexema">acumulado</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>34</td>
+                <td>9</td>
+            </tr>
+            <tr>
+                <td>102</td>
+                <td class="lexema">Ficha</td>
+                <td><span class="badge">= (asignación)</span></td>
+                <td>34</td>
+                <td>19</td>
+            </tr>
+            <tr>
+                <td>103</td>
+                <td class="lexema">acumulado</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>34</td>
+                <td>25</td>
+            </tr>
+            <tr>
+                <td>104</td>
+                <td class="lexema">GolSuma</td>
+                <td><span class="badge">+ (suma)</span></td>
+                <td>34</td>
+                <td>35</td>
+            </tr>
+            <tr>
+                <td>105</td>
+                <td class="lexema">acumulado</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>34</td>
+                <td>43</td>
+            </tr>
+            <tr>
+                <td>106</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>34</td>
+                <td>53</td>
+            </tr>
+            <tr>
+                <td>107</td>
+                <td class="lexema">Narrar</td>
+                <td><span class="badge">cout</span></td>
+                <td>35</td>
+                <td>9</td>
+            </tr>
+            <tr>
+                <td>108</td>
+                <td class="lexema">Local</td>
+                <td><span class="badge">( (apertura paréntesis)</span></td>
+                <td>35</td>
+                <td>16</td>
+            </tr>
+            <tr>
+                <td>109</td>
+                <td class="lexema">acumulado</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>35</td>
+                <td>22</td>
+            </tr>
+            <tr>
+                <td>110</td>
+                <td class="lexema">Visitante</td>
+                <td><span class="badge">) (cierre paréntesis)</span></td>
+                <td>35</td>
+                <td>32</td>
+            </tr>
+            <tr>
+                <td>111</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>35</td>
+                <td>42</td>
+            </tr>
+            <tr>
+                <td>112</td>
+                <td class="lexema">FinPartido</td>
+                <td><span class="badge">} (fin bloque)</span></td>
+                <td>36</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>113</td>
+                <td class="lexema">Entrenamiento</td>
+                <td><span class="badge">while</span></td>
+                <td>37</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>114</td>
+                <td class="lexema">Local</td>
+                <td><span class="badge">( (apertura paréntesis)</span></td>
+                <td>37</td>
+                <td>19</td>
+            </tr>
+            <tr>
+                <td>115</td>
+                <td class="lexema">acumulado</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>37</td>
+                <td>25</td>
+            </tr>
+            <tr>
+                <td>116</td>
+                <td class="lexema">Pierde</td>
+                <td><span class="badge">< (menor que)</span></td>
+                <td>37</td>
+                <td>35</td>
+            </tr>
+            <tr>
+                <td>117</td>
+                <td class="lexema">maximo</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>37</td>
+                <td>42</td>
+            </tr>
+            <tr>
+                <td>118</td>
+                <td class="lexema">Visitante</td>
+                <td><span class="badge">) (cierre paréntesis)</span></td>
+                <td>37</td>
+                <td>49</td>
+            </tr>
+            <tr>
+                <td>119</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>37</td>
+                <td>59</td>
+            </tr>
+            <tr>
+                <td>120</td>
+                <td class="lexema">Temporada</td>
+                <td><span class="badge">for</span></td>
+                <td>40</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>121</td>
+                <td class="lexema">Local</td>
+                <td><span class="badge">( (apertura paréntesis)</span></td>
+                <td>40</td>
+                <td>15</td>
+            </tr>
+            <tr>
+                <td>122</td>
+                <td class="lexema">Dorsal</td>
+                <td><span class="badge">int</span></td>
+                <td>40</td>
+                <td>21</td>
+            </tr>
+            <tr>
+                <td>123</td>
+                <td class="lexema">i</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>40</td>
+                <td>28</td>
+            </tr>
+            <tr>
+                <td>124</td>
+                <td class="lexema">Ficha</td>
+                <td><span class="badge">= (asignación)</span></td>
+                <td>40</td>
+                <td>30</td>
+            </tr>
+            <tr>
+                <td>125</td>
+                <td class="lexema">0</td>
+                <td><span class="badge">Literal entero</span></td>
+                <td>40</td>
+                <td>36</td>
+            </tr>
+            <tr>
+                <td>126</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>40</td>
+                <td>38</td>
+            </tr>
+            <tr>
+                <td>127</td>
+                <td class="lexema">i</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>40</td>
+                <td>48</td>
+            </tr>
+            <tr>
+                <td>128</td>
+                <td class="lexema">Pierde</td>
+                <td><span class="badge">< (menor que)</span></td>
+                <td>40</td>
+                <td>50</td>
+            </tr>
+            <tr>
+                <td>129</td>
+                <td class="lexema">numero</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>40</td>
+                <td>57</td>
+            </tr>
+            <tr>
+                <td>130</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>40</td>
+                <td>64</td>
+            </tr>
+            <tr>
+                <td>131</td>
+                <td class="lexema">i</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>40</td>
+                <td>74</td>
+            </tr>
+            <tr>
+                <td>132</td>
+                <td class="lexema">GolSuma</td>
+                <td><span class="badge">+ (suma)</span></td>
+                <td>40</td>
+                <td>76</td>
+            </tr>
+            <tr>
+                <td>133</td>
+                <td class="lexema">1</td>
+                <td><span class="badge">Literal entero</span></td>
+                <td>40</td>
+                <td>84</td>
+            </tr>
+            <tr>
+                <td>134</td>
+                <td class="lexema">Visitante</td>
+                <td><span class="badge">) (cierre paréntesis)</span></td>
+                <td>40</td>
+                <td>86</td>
+            </tr>
+            <tr>
+                <td>135</td>
+                <td class="lexema">InicioPartido</td>
+                <td><span class="badge">{ (inicio bloque)</span></td>
+                <td>41</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>136</td>
+                <td class="lexema">resultado</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>42</td>
+                <td>9</td>
+            </tr>
+            <tr>
+                <td>137</td>
+                <td class="lexema">Ficha</td>
+                <td><span class="badge">= (asignación)</span></td>
+                <td>42</td>
+                <td>19</td>
+            </tr>
+            <tr>
+                <td>138</td>
+                <td class="lexema">resultado</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>42</td>
+                <td>25</td>
+            </tr>
+            <tr>
+                <td>139</td>
+                <td class="lexema">GolSuma</td>
+                <td><span class="badge">+ (suma)</span></td>
+                <td>42</td>
+                <td>35</td>
+            </tr>
+            <tr>
+                <td>140</td>
+                <td class="lexema">i</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>42</td>
+                <td>43</td>
+            </tr>
+            <tr>
+                <td>141</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>42</td>
+                <td>45</td>
+            </tr>
+            <tr>
+                <td>142</td>
+                <td class="lexema">Narrar</td>
+                <td><span class="badge">cout</span></td>
+                <td>43</td>
+                <td>9</td>
+            </tr>
+            <tr>
+                <td>143</td>
+                <td class="lexema">Local</td>
+                <td><span class="badge">( (apertura paréntesis)</span></td>
+                <td>43</td>
+                <td>16</td>
+            </tr>
+            <tr>
+                <td>144</td>
+                <td class="lexema">resultado</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>43</td>
+                <td>22</td>
+            </tr>
+            <tr>
+                <td>145</td>
+                <td class="lexema">Visitante</td>
+                <td><span class="badge">) (cierre paréntesis)</span></td>
+                <td>43</td>
+                <td>32</td>
+            </tr>
+            <tr>
+                <td>146</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>43</td>
+                <td>42</td>
+            </tr>
+            <tr>
+                <td>147</td>
+                <td class="lexema">FinPartido</td>
+                <td><span class="badge">} (fin bloque)</span></td>
+                <td>44</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>148</td>
+                <td class="lexema">Liga</td>
+                <td><span class="badge">if</span></td>
+                <td>47</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>149</td>
+                <td class="lexema">Local</td>
+                <td><span class="badge">( (apertura paréntesis)</span></td>
+                <td>47</td>
+                <td>10</td>
+            </tr>
+            <tr>
+                <td>150</td>
+                <td class="lexema">resultado</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>47</td>
+                <td>16</td>
+            </tr>
+            <tr>
+                <td>151</td>
+                <td class="lexema">Gana</td>
+                <td><span class="badge">> (mayor que)</span></td>
+                <td>47</td>
+                <td>26</td>
+            </tr>
+            <tr>
+                <td>152</td>
+                <td class="lexema">40</td>
+                <td><span class="badge">Literal entero</span></td>
+                <td>47</td>
+                <td>31</td>
+            </tr>
+            <tr>
+                <td>153</td>
+                <td class="lexema">Visitante</td>
+                <td><span class="badge">) (cierre paréntesis)</span></td>
+                <td>47</td>
+                <td>34</td>
+            </tr>
+            <tr>
+                <td>154</td>
+                <td class="lexema">InicioPartido</td>
+                <td><span class="badge">{ (inicio bloque)</span></td>
+                <td>48</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>155</td>
+                <td class="lexema">Narrar</td>
+                <td><span class="badge">cout</span></td>
+                <td>49</td>
+                <td>9</td>
+            </tr>
+            <tr>
+                <td>156</td>
+                <td class="lexema">Local</td>
+                <td><span class="badge">( (apertura paréntesis)</span></td>
+                <td>49</td>
+                <td>16</td>
+            </tr>
+            <tr>
+                <td>157</td>
+                <td class="lexema">resultado</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>49</td>
+                <td>22</td>
+            </tr>
+            <tr>
+                <td>158</td>
+                <td class="lexema">Visitante</td>
+                <td><span class="badge">) (cierre paréntesis)</span></td>
+                <td>49</td>
+                <td>32</td>
+            </tr>
+            <tr>
+                <td>159</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>49</td>
+                <td>42</td>
+            </tr>
+            <tr>
+                <td>160</td>
+                <td class="lexema">FinPartido</td>
+                <td><span class="badge">} (fin bloque)</span></td>
+                <td>50</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>161</td>
+                <td class="lexema">Revancha</td>
+                <td><span class="badge">else if</span></td>
+                <td>51</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>162</td>
+                <td class="lexema">Local</td>
+                <td><span class="badge">( (apertura paréntesis)</span></td>
+                <td>51</td>
+                <td>14</td>
+            </tr>
+            <tr>
+                <td>163</td>
+                <td class="lexema">resultado</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>51</td>
+                <td>20</td>
+            </tr>
+            <tr>
+                <td>164</td>
+                <td class="lexema">Empata</td>
+                <td><span class="badge">== (igual)</span></td>
+                <td>51</td>
+                <td>30</td>
+            </tr>
+            <tr>
+                <td>165</td>
+                <td class="lexema">45</td>
+                <td><span class="badge">Literal entero</span></td>
+                <td>51</td>
+                <td>37</td>
+            </tr>
+            <tr>
+                <td>166</td>
+                <td class="lexema">Visitante</td>
+                <td><span class="badge">) (cierre paréntesis)</span></td>
+                <td>51</td>
+                <td>40</td>
+            </tr>
+            <tr>
+                <td>167</td>
+                <td class="lexema">InicioPartido</td>
+                <td><span class="badge">{ (inicio bloque)</span></td>
+                <td>52</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>168</td>
+                <td class="lexema">Narrar</td>
+                <td><span class="badge">cout</span></td>
+                <td>53</td>
+                <td>9</td>
+            </tr>
+            <tr>
+                <td>169</td>
+                <td class="lexema">Local</td>
+                <td><span class="badge">( (apertura paréntesis)</span></td>
+                <td>53</td>
+                <td>16</td>
+            </tr>
+            <tr>
+                <td>170</td>
+                <td class="lexema">acumulado</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>53</td>
+                <td>22</td>
+            </tr>
+            <tr>
+                <td>171</td>
+                <td class="lexema">Visitante</td>
+                <td><span class="badge">) (cierre paréntesis)</span></td>
+                <td>53</td>
+                <td>32</td>
+            </tr>
+            <tr>
+                <td>172</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>53</td>
+                <td>42</td>
+            </tr>
+            <tr>
+                <td>173</td>
+                <td class="lexema">FinPartido</td>
+                <td><span class="badge">} (fin bloque)</span></td>
+                <td>54</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>174</td>
+                <td class="lexema">Copa</td>
+                <td><span class="badge">else</span></td>
+                <td>55</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>175</td>
+                <td class="lexema">InicioPartido</td>
+                <td><span class="badge">{ (inicio bloque)</span></td>
+                <td>56</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>176</td>
+                <td class="lexema">Narrar</td>
+                <td><span class="badge">cout</span></td>
+                <td>57</td>
+                <td>9</td>
+            </tr>
+            <tr>
+                <td>177</td>
+                <td class="lexema">Local</td>
+                <td><span class="badge">( (apertura paréntesis)</span></td>
+                <td>57</td>
+                <td>16</td>
+            </tr>
+            <tr>
+                <td>178</td>
+                <td class="lexema">suma</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>57</td>
+                <td>22</td>
+            </tr>
+            <tr>
+                <td>179</td>
+                <td class="lexema">Visitante</td>
+                <td><span class="badge">) (cierre paréntesis)</span></td>
+                <td>57</td>
+                <td>27</td>
+            </tr>
+            <tr>
+                <td>180</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>57</td>
+                <td>37</td>
+            </tr>
+            <tr>
+                <td>181</td>
+                <td class="lexema">FinPartido</td>
+                <td><span class="badge">} (fin bloque)</span></td>
+                <td>58</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>182</td>
+                <td class="lexema">ResultadoFinal</td>
+                <td><span class="badge">return</span></td>
+                <td>61</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>183</td>
+                <td class="lexema">resultado</td>
+                <td><span class="badge">Identificador</span></td>
+                <td>61</td>
+                <td>20</td>
+            </tr>
+            <tr>
+                <td>184</td>
+                <td class="lexema">FinJugada</td>
+                <td><span class="badge">; (fin instrucción)</span></td>
+                <td>61</td>
+                <td>30</td>
+            </tr>
+            <tr>
+                <td>185</td>
+                <td class="lexema">FinPartido</td>
+                <td><span class="badge">} (fin bloque)</span></td>
+                <td>63</td>
+                <td>1</td>
             </tr>
         </table>
     </div>
